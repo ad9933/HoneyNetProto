@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     public void onSendBtn(View v) {
         SendThread thread = new SendThread(socket, "HONEY".getBytes());
         thread.start();
+
+
+
     }
 
 }
