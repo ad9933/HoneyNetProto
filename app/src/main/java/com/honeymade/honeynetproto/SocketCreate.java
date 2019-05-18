@@ -9,17 +9,9 @@ import java.net.*;
 public class SocketCreate extends Thread {
 
     DatagramSocket socket;
-    MainActivity mainActivity;
 
-    SocketCreate(MainActivity mainActivity) {
-        socket = mainActivity.socket;
-        this.mainActivity = mainActivity;
-
-        try  {
-            socket = new DatagramSocket();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    SocketCreate() {
+        super();
     }
 
     @Override
@@ -31,7 +23,7 @@ public class SocketCreate extends Thread {
             e.printStackTrace();
         }
 
-        mainActivity.socket = socket;
+        MainActivity.socket = socket;
     }
 
 

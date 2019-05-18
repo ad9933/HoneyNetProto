@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     public static InetAddress DESTINATION;
     public static final int PORT = 7777;
 
-    DatagramSocket socket = null;
+    public static DatagramSocket socket = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        SocketCreate sc = new SocketCreate(this);
+        SocketCreate sc = new SocketCreate();
         sc.start();
 
     }
