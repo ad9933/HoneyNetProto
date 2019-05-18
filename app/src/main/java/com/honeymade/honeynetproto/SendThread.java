@@ -24,5 +24,6 @@ public class SendThread extends Thread {
             e.printStackTrace();
         }
 
+        System.out.println("Message Sent!");
     }
 }

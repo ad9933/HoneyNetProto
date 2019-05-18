@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         try {
-            DESTINATION = InetAddress.getByName("127.0.0.1");
+            DESTINATION = InetAddress.getByName("192.168.0.10");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public void onSendBtn(View v) {
         SendThread thread = new SendThread(socket, "HONEY".getBytes());
         thread.start();
-
+        System.out.println("Message Thread Loaded!");
 
 
     }
