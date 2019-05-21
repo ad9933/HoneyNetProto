@@ -2,13 +2,17 @@ package com.honeymade.honeynetproto;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.icu.util.Output;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.*;
 import java.util.Set;
 
@@ -18,11 +22,15 @@ public class MainActivity extends AppCompatActivity {
     public static final int PORT = 7777;        //UDP통신에 사용될 포트
     public static final int REQUEST_ENABLE_BT = 10;
 
-    public static final String BT_ADDR = "";    //아두이노 블루투스모듈의 MAC주소
+    public static final String BT_NAME = "HONEY";    //아두이노 블루투스모듈의 MAC주소
     public static BluetoothDevice btDevice = null;
 
     public static DatagramSocket socket = null;
     public static BluetoothAdapter btAdapter = null;
+    public static BluetoothSocket btSocket = null;
+
+    public static InputStream btIn = null;
+    public static OutputStream btOut = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {        //어플을 열었을때 시작되는 함수
@@ -48,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         //기기가 블루투스를 지원하는지 확인
         if(btAdapter != null) {
+            System.out.println("[HONEY] BT START");
             //블루투스가 꺼져있을경우 이용자에게 블루투스를 켜도록 요청함
             if(!btAdapter.isEnabled()) {
                 Intent enableBt = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -57,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             Set<BluetoothDevice> pairedDevice = btAdapter.getBondedDevices();   //페어링된 기기들을 불러옴
 
             for (BluetoothDevice device : pairedDevice) {   //페어링된 기기중에 우리가 원하는 주소가 있는지 확인함
-                if (device.getAddress().equals(BT_ADDR)) {
+                if (device.getName().equals(BT_NAME)) {
                     btDevice = device;
                     found = true;
                 }
@@ -65,10 +74,39 @@ public class MainActivity extends AppCompatActivity {
 
             //페어링된 기기중에서 우리가 원하는 블루투스 모듈을 찾지 못했을경우 오류 메세지를 출력함
             if (!found) {
-                Toast notFound = Toast.makeText(this, "Not Paired!!", Toast.LENGTH_SHORT);
-                notFound.show();
+                System.out.println("[HONEY] BT NOT FOUND!!");
+            } else {
+                System.out.println("[HONEY] BT FOUND!!");
+                try {
+                    btSocket = btDevice.createRfcommSocketToServiceRecord(java.util.UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"));
+                    btSocket.connect();
+                    System.out.println("[HONEY] BT CONNECTED!!");
+                    btOut = btSocket.getOutputStream();
+                    System.out.println("[HONEY] BT OUTPUT STREAM INITIATED!!");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
+        }
+
+        if(btAdapter == null) {System.out.println("[HONEY] ERROR");}
+
+    }
+
+    public void onSendBtBtn(View v) {
+
+        if(btOut != null) {
+            try {
+                btOut.write(123);
+                System.out.println("[HONEY] BT MSG SENT!!");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            System.out.println("[HONEY] BT OUTPUT STREAM ERROR");
         }
 
     }

@@ -34,9 +34,27 @@
         android:layout_marginEnd="245dp"
         android:layout_marginRight="245dp"
         android:layout_marginBottom="160dp"
+        android:onClick="onBtStart"
         android:text="BT START"
         app:layout_constraintBottom_toTopOf="@+id/sendbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/send_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:layout_marginLeft="104dp"
+        android:layout_marginTop="302dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="381dp"
+        android:onClick="onSendBtBtn"
+        android:text="SEND BT"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sendbtn"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
