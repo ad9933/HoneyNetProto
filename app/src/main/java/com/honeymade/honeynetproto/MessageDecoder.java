@@ -2,7 +2,7 @@ package com.honeymade.honeynetproto;
 
 import java.util.*;
 
-public class MessageDecoder {
+public class MessageDecoder {   //아두이노 카메라에서 보낸 정보를 처리하는 클래스
 
     private static final int WIDTH = 320; //640;
     private static final int HEIGHT = 240; //480;
@@ -22,7 +22,7 @@ public class MessageDecoder {
 
         Iterator<Byte> iterator = buff2.iterator();
 
-        //2차원 배열로 정리하는 부분 (복붙)
+        //데이터를 2차원 배열로 정리하는 부분
         //출처 : https://www.instructables.com/id/OV7670-Arduino-Camera-Sensor-Module-Framecapture-T/
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {

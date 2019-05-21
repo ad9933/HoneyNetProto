@@ -3,6 +3,7 @@
     package="com.honeymade.honeynetproto">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
         android:allowBackup="true"
@@ -16,8 +17,8 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="happ"
-                    android:host="honey"
+                <data android:scheme="http"
+                    android:host="honey.app"
                     android:pathPrefix="/"
                     />
             </intent-filter>
