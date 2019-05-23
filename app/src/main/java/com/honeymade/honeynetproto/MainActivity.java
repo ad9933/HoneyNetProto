@@ -8,6 +8,8 @@ import android.icu.util.Output;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -22,8 +24,12 @@ public class MainActivity extends AppCompatActivity {
     public static final int PORT = 7777;        //UDP통신에 사용될 포트
     public static final int REQUEST_ENABLE_BT = 10;
 
-    public static final String BT_NAME = "HONEY";    //아두이노 블루투스모듈의 MAC주소
+    public static final String BT_NAME = "HONEY";    //AT Command로 설정된 아두이노 블루투스 모듈의 이름
     public static BluetoothDevice btDevice = null;
+                                                    //패킷의 맨 앞에 붙을 헤더, 아두이노에게 무엇을 할지를 알려주는 역할을 함
+    public static final byte HEADER_MSG = 0x10;     //LCD에 표시할 메시지를 의미함
+    public static final byte HEADER_CAM = 0x11;     //카메라를 작동시키라는 명령을 의미함
+    public static final byte HEADER_LED = 0x12;     //불을 켜라는 명령을 의미함
 
     public static DatagramSocket socket = null;
     public static BluetoothAdapter btAdapter = null;
@@ -75,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
             //페어링된 기기중에서 우리가 원하는 블루투스 모듈을 찾지 못했을경우 오류 메세지를 출력함
             if (!found) {
                 System.out.println("[HONEY] BT NOT FOUND!!");
-            } else {
+            } else {        //연결된 아두이노 블루투스 모듈을 발견했을 때 실행하는 구문
                 System.out.println("[HONEY] BT FOUND!!");
-                try {
+                try {       //발견했을 경우 연결을 시도하며 블루투스 소켓을 만듦
                     btSocket = btDevice.createRfcommSocketToServiceRecord(java.util.UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"));
                     btSocket.connect();
                     System.out.println("[HONEY] BT CONNECTED!!");
@@ -87,19 +93,20 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+
             }
 
         }
-
+        //블루투스 미지원 기기일때 실행됨
         if(btAdapter == null) {System.out.println("[HONEY] ERROR");}
 
     }
 
     public void onSendBtBtn(View v) {
-
+        //블루투스로 메세지를 보내는 버튼이 눌렸을때 실행되는 부분
         if(btOut != null) {
             try {
-                btOut.write(123);
+                btOut.write(123);   //정수 123을 블루투스를 통하여 송신한다.
                 System.out.println("[HONEY] BT MSG SENT!!");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -119,4 +126,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onMsgSendBtn(View v) {  //LCD에 표시할 메시지를 전송함
+        String msg = null;
+        EditText textInput = (EditText)findViewById(R.id.msgbox);
+        msg = textInput.getText().toString();   //사용자가 텍스트 상자에 입력한 메시지를 아두이노로 보냄
+        textInput.setText("");
+        ((TextView)findViewById(R.id.input_viewer)).setText(msg);
+
+        SendThread thread = new SendThread(socket, (HEADER_MSG + msg).getBytes());
+        thread.start();
+
+    }
 }
