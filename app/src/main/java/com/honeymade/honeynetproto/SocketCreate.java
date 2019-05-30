@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.io.IOException;
 import java.net.*;
 
-public class SocketCreate extends Thread {
+public class SocketCreate extends Thread {      //소켓 생성을 위한 스레드
 
     DatagramSocket socket;
 
@@ -23,7 +23,7 @@ public class SocketCreate extends Thread {
             e.printStackTrace();
         }
 
-        MainActivity.socket = socket;
+        MainActivity.socket = socket;       //소켓 객체를 만들고 저장해준다.
     }
 
 
