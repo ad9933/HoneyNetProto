@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String BT_NAME = "HONEY";    //AT Command로 설정된 아두이노 블루투스 모듈의 이름
     public static BluetoothDevice btDevice = null;
                                                     //패킷의 맨 앞에 붙을 헤더, 아두이노에게 무엇을 할지를 알려주는 역할을 함
-    public static final byte HEADER_MSG = 0x10;     //LCD에 표시할 메시지를 의미함
-    public static final byte HEADER_CAM = 0x11;     //카메라를 작동시키라는 명령을 의미함
-    public static final byte HEADER_LED = 0x12;     //불을 켜라는 명령을 의미함
+    public static final byte[] HEADER_MSG = {0x10};     //LCD에 표시할 메시지를 의미함
+    public static final byte[] HEADER_CAM = {0x11};     //카메라를 작동시키라는 명령을 의미함
+    public static final byte[] HEADER_LED = {0x12};     //불을 켜라는 명령을 의미함
 
     public static DatagramSocket socket = null;
     public static BluetoothAdapter btAdapter = null;
@@ -137,4 +137,27 @@ public class MainActivity extends AppCompatActivity {
         thread.start();
 
     }
+
+    public void onSetIPBtn(View v) {    //SET IP 버튼이 눌렀을 때 실행
+
+        String strAddr = null;
+        EditText inputIP = (EditText)findViewById(R.id.ipbox);
+        strAddr = inputIP.getText().toString();
+
+        try {
+            DESTINATION = InetAddress.getByName(strAddr);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        ((TextView)findViewById(R.id.IPAddrBox)).setText(DESTINATION.toString());
+
+    }
+
+    public void onCamBtn(View v) {
+
+
+
+    }
+
 }

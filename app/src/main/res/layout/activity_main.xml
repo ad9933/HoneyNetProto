@@ -69,14 +69,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="104dp"
         android:layout_marginLeft="104dp"
-        android:layout_marginTop="302dp"
+        android:layout_marginTop="95dp"
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
-        android:layout_marginBottom="381dp"
+        android:layout_marginBottom="588dp"
         android:onClick="onSendBtBtn"
         android:text="SEND BT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/sendbtn"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,9 +95,10 @@
         android:text="MSG"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/msgbox"
-        app:layout_constraintTop_toBottomOf="@+id/send_bt" />
+        app:layout_constraintTop_toBottomOf="@+id/send_bt"
+        app:layout_constraintVertical_bias="0.937" />
 
     <TextView
         android:id="@+id/input_viewer"
@@ -104,13 +106,82 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginLeft="55dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="39dp"
         android:layout_marginEnd="56dp"
         android:layout_marginRight="56dp"
-        android:layout_marginBottom="103dp"
+        android:layout_marginBottom="140dp"
         android:text="Input"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/msg_send_btn" />
+
+    <EditText
+        android:id="@+id/ipbox"
+        android:layout_width="300dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginTop="616dp"
+        android:layout_marginEnd="287dp"
+        android:layout_marginRight="287dp"
+        android:layout_marginBottom="61dp"
+        android:inputType="text"
+        android:text="IP Address"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.423"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/setIPbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="67dp"
+        android:onClick="onSetIPBtn"
+        android:text="SET IP"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ipbox"
+        app:layout_constraintTop_toBottomOf="@+id/input_viewer" />
+
+    <TextView
+        android:id="@+id/IPAddrBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:layout_marginBottom="16dp"
+        android:text="IP Addr"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ipbox" />
+
+    <Button
+        android:id="@+id/cam_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:layout_marginLeft="104dp"
+        android:layout_marginTop="159dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="122dp"
+        android:text="CAM"
+        app:layout_constraintBottom_toTopOf="@+id/msg_send_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sendbtn"
+        app:layout_constraintTop_toBottomOf="@+id/send_bt" />”@+id/edittext” android:layout_width=”match_parent” android:layout_height=”wrap_content” android:hint=”Input”/>
+
 </android.support.constraint.ConstraintLayout>
