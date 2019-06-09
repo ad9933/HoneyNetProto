@@ -27,9 +27,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String BT_NAME = "HONEY";    //AT Command로 설정된 아두이노 블루투스 모듈의 이름
     public static BluetoothDevice btDevice = null;
                                                     //패킷의 맨 앞에 붙을 헤더, 아두이노에게 무엇을 할지를 알려주는 역할을 함
-    public static final byte[] HEADER_MSG = {0x10};     //LCD에 표시할 메시지를 의미함
+    public static final String HEADER_MSG = "M";     //LCD에 표시할 메시지를 의미함
     public static final byte[] HEADER_CAM = {0x11};     //카메라를 작동시키라는 명령을 의미함
-    public static final byte[] HEADER_LED = {0x12};     //불을 켜라는 명령을 의미함
+    public static final String HEADER_LED_ON = "O";     //불을 켜라는 명령을 의미함
+    public static final String HEADER_LED_OFF = "X";     //불끄기
+    public static final String HEADER_DOOR_OPEN= "D";
+    public static final String HEADER_DOOR_CLOSE = "C";
+
 
     public static DatagramSocket socket = null;
     public static BluetoothAdapter btAdapter = null;
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("[HONEY] BT FOUND!!");
                 try {       //발견했을 경우 연결을 시도하며 블루투스 소켓을 만듦
                     btSocket = btDevice.createRfcommSocketToServiceRecord(java.util.UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"));
+                    //HM-10 74278BDA-B644-4520-8F0C-720EAF059935
                     btSocket.connect();
                     System.out.println("[HONEY] BT CONNECTED!!");
                     btOut = btSocket.getOutputStream();
@@ -120,10 +125,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSendBtn(View v) {     //만들어진 소켓을 통해서 아두이노로 정보를 전송함.
                                         //정보를 전송한 것을 아두이노에서 읽음으로서 여러가지 작업을 할 수 있음
-        SendThread thread = new SendThread(socket, "HONEY".getBytes());     //정보를 보내는 과정도 스레드로 다룬다
+        SendThread thread = new SendThread(socket, HEADER_LED_ON.getBytes());     //정보를 보내는 과정도 스레드로 다룬다
         thread.start();
         System.out.println("Message Thread Loaded!");       //스레드가 켜졌음을 로그로 표시해줌
 
+    }
+
+    public void onLEDOff(View v) {     //만들어진 소켓을 통해서 아두이노로 정보를 전송함.
+        //정보를 전송한 것을 아두이노에서 읽음으로서 여러가지 작업을 할 수 있음
+        SendThread thread = new SendThread(socket, HEADER_LED_OFF.getBytes());     //정보를 보내는 과정도 스레드로 다룬다
+        thread.start();
     }
 
     public void onMsgSendBtn(View v) {  //LCD에 표시할 메시지를 전송함
@@ -155,9 +166,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onCamBtn(View v) {
+        SendThread thread = new SendThread(socket, HEADER_DOOR_OPEN.getBytes());
+        thread.start();
+    }
 
-
-
+    public void onDoorClose(View v) {
+        SendThread thread = new SendThread(socket, HEADER_DOOR_CLOSE.getBytes());
+        thread.start();
     }
 
 }
