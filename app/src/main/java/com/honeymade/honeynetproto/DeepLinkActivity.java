@@ -9,6 +9,7 @@ import java.io.IOException;
 public class DeepLinkActivity extends AppCompatActivity {       //이용자가 다른 어플을 이용하다가 딥링크를 열었을 경우 시작되는 액티비티이다.
 
     private final String DEEPLINK_DATA = "http://honey.app/12345";  //딥링크로 어떤 주소값에 반응할지를 설정한다.
+    private final String DEEPLINK_DATA_DOOR = "http://honey.app/door";
     private final String ARDUINO_BT_BUZZER= "http://honey.app/buzzer";
 
     @Override
@@ -34,7 +35,7 @@ public class DeepLinkActivity extends AppCompatActivity {       //이용자가 �
         System.out.println("data : " + data);
 
         if (data.equals(DEEPLINK_DATA)) {                       //딥링크 데이터를 비교하는 과정
-            SendThread st = new SendThread(MainActivity.socket, "deeplinked".getBytes());   //만약 정보를 보내라는 데이터일 경우
+            SendThread st = new SendThread(MainActivity.socket, MainActivity.HEADER_LED_ON.getBytes());   //만약 정보를 보내라는 데이터일 경우
             st.start();                                                                     //소켓으로 정보를 전송한다.
         } else if (data.equals(ARDUINO_BT_BUZZER)) {
 
@@ -44,6 +45,9 @@ public class DeepLinkActivity extends AppCompatActivity {       //이용자가 �
                 e.printStackTrace();
             }
 
+        } else if (data.equals(DEEPLINK_DATA_DOOR)) {
+            SendThread st = new SendThread(MainActivity.socket, MainActivity.HEADER_DOOR_OPEN.getBytes());
+            st.start();
         }
 
     }
